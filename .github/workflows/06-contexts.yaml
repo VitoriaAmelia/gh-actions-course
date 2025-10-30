@@ -1,23 +1,35 @@
 name: 06 -contexts
+# Nome que será exibido na execução, incluindo o valor do input 'debug'
 run-name: 06 - Contexts | DEBUG - ${{inputs.debug}}
+# Define quando o workflow será acionado
+
+# Define quando o workflow será acionado
 on: 
+    # Executa automaticamente quando há um push no repositório
     push:
+    # Permite disparar manualmente o workflow no GitHub com a opção de inputs
     workflow_dispatch:
         inputs:
+            # Cria um input chamado 'debug' que pode ser passado ao iniciar manualmente o workflow
             debug:
                 type: boolean
                 default: false
-env: 
-    MY_WORKFLOW_VAR: 'workflow'
-    MY_OVERWRITTENN_VAR: 'workflow'
 
+# Variáveis de ambiente definidas no nível do workflow (válidas para todos os jobs)
+env: 
+    MY_WORKFLOW_VAR: 'workflow' # Variável disponível globalmente
+    MY_OVERWRITTENN_VAR: 'workflow' # Variável que será sobrescrita depois
+
+# Define os jobs do workflow
 jobs:
     echo-data:
         runs-on: ubuntu-latest
         env:
+            # Variáveis de ambiente definidas apenas neste job
             MY_JOB_VAR: 'job'
-            MY_OVERWRITTEN_VAR: 'job'
+            MY_OVERWRITTEN_VAR: 'job' # Essa variável será sobrescrita dentro de um step depois
         steps:
+            # Primeiro step: exibir informações do contexto GitHub
             - name: Display information
               run: |
                 echo "event name: ${{github.event_name}}"
@@ -26,15 +38,21 @@ jobs:
                 echo "Workflow: ${{github.workflow}}"
                 echo "Run ID: ${{github.run_id}}"
                 echo "Run number: ${{github.run_number}}"
+            # Segundo step: tentar recuperar uma variável definida nas variáveis do repositório
             - name: Retrieve Variable
               run: |
                 echo "Variable value: ${{vars.MY_VAR}}"
+
+            # Terceiro step: imprimir variáveis de ambiente (com sobrescrita local)
             - name: Print Env Variables
               env: 
-                MY_OVERWRITTEN_VAR: 'step'
+                MY_OVERWRITTEN_VAR: 'step' # Sobrescreve a variável apenas neste step
               run: |
                echo "Workflow env: ${{env.MY_WORKFLOW_VAR}}"
-               echo "Overwritten env: ${{env.MY_OVERWRITTEN_VAR}}"
+               echo "Overwritten env: ${{env.MY_OVERWRITTEN_VAR}}" 
+            # Mostra o valor sobrescrito no nível do step ('step')   
+
+            # Quarto step: imprimir novamente as variáveis, sem sobrescrita local
             - name: Print Env Variables
               run: |
                echo "Workflow env: ${{env.MY_WORKFLOW_VAR}}"
