@@ -5,8 +5,6 @@ run-name: 06 - Contexts | DEBUG - ${{inputs.debug}}
 
 # Define quando o workflow será acionado
 on: 
-    # Executa automaticamente quando há um push no repositório
-    push:
     # Permite disparar manualmente o workflow no GitHub com a opção de inputs
     workflow_dispatch:
         inputs:
