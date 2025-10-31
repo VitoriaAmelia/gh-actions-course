@@ -1,4 +1,4 @@
-name: working with inputs
+name: 11 - working with inputs
 
 on:
     workflow_dispatch:
@@ -10,7 +10,7 @@ on:
             target:
                 type: environment
                 required: true
-                description: wich environment the workflow will target
+                description: Which environment the workflow will target
             tag:
                 type: choice
                 options:
@@ -18,17 +18,19 @@ on:
                     - v2
                     - v3
                 default: v3
-                description: release from which to buid and deploy
+                description: Release from which to build and deploy
+
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
             - name: Build
-              run: echo "Building from tag ${{inputs.tag}}"
+              run: echo "Building from tag ${{ inputs.tag }}"
+
     deploy:
         runs-on: ubuntu-latest
-        if: ${{!inputs.dry-run}}
-        environment: ${{inputs.target}}
+        if: ${{ !inputs.dry-run }}
+        environment: ${{ inputs.target }}
         steps:
             - name: Deploy
-              run: echo  "Deploying to ${{inputs.target}}"
+              run: echo "Deploying to ${{ inputs.target }}"
