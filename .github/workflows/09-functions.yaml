@@ -9,7 +9,6 @@ jobs:
     steps:
       - name: Print PR title
         run: echo "${{ github.event.pull_request.title }}"
-<<<<<<< HEAD
 
       - name: Print PR labels
         run: |
@@ -20,28 +19,6 @@ jobs:
       - name: Bug step
         if: ${{ !cancelled() && contains(github.event.pull_request.title, 'fix') }}
         run: echo "I am a bug fix"
-
-      - name: Sleep for 20 seconds
-        run: sleep 20
-
-      - name: failing step
-        run: exit 1
-
-      - name: I will be skipped
-        if: ${{ success() }}
-        run: echo "I will run if previous steps succeed"
-=======
-
-      - name: Print PR labels
-        run: |
-          cat << EOF
-          ${{ toJSON(github.event.pull_request.labels) }}
-          EOF
-  
-      - name: Bug step
-        if: ${{ !cancelled() && contains(github.event.pull_request.title, 'fix') }}
-        run: echo "I am a bug fix"
->>>>>>> 763bee79e43ff239feeada0f9e1cea239287cb8f
 
       - name: I will execute
         if: ${{ success() }}
