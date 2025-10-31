@@ -17,7 +17,8 @@ jobs:
                 echo "Linting and building project"
     unit-test:
         runs-on: ubuntu-latest
-        continue-on-error: true
+        # continue-on-error: true
+        #linha de cima é para continuar executando se tiver um erro
         steps:
             - name: Running unit tests
               run: |
