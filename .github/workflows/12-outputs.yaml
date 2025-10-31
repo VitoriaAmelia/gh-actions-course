@@ -1,4 +1,4 @@
-name: 12 - Working with autputs
+name: 12 - Working with outputs
 
 on:
     workflow_dispatch:
